@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: Functionnal Component
+# uuid: react-1
+# key: component
+# condition: t
+# --
+import React from 'react';
+
+type Props {
+     ${:3Type}
+}
+const ${1:Component} = (${2:Props}: Props) => {
+
+      return (
+        <></>
+      )
+};
+
+export { ${1:Component} };

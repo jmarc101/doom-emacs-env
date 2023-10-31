@@ -1,0 +1,636 @@
+* Golang Playground
+** Modules
+
+Go modules are the standard way of managing dependencies in Go. Introduced in Go 1.11, they replace older methods like GOPATH and dep, allowing for versioned module paths and decentralized dependency resolution.
+
+*** Creating a New Module
+
+To create a new module, navigate to your project directory and initialize a new module by specifying the module path:
+
+#+begin_src shell
+go mod init <module-path>
+#+end_src
+
+*** Adding Dependencies
+
+When you add an import in your code for a package that's not in the standard library or your module, running go build, go test, or any other Go command that requires package resolution will automatically update your go.mod file.
+
+*** Listing Dependencies
+
+You can see all the dependencies of your module using:
+
+#+begin_src shell
+go list -m all
+#+end_src
+
+*** Upgrading and Downgrading Dependencies
+
+To upgrade to the latest version of a dependency:
+
+#+begin_src shell
+go get <dependency-name>@latest
+#+end_src
+
+To switch to a specific version:
+
+#+begin_src shell
+go get <dependency-name>@<version>
+#+end_src
+
+*** Removing Unused Dependencies
+
+Clean up the unused dependencies from your go.mod file:
+
+#+begin_src shell
+go mod tidy
+#+end_src
+
+*** Vendoring Dependencies
+
+To vendor dependencies, which means to copy all your external dependencies into a local vendor directory (useful for builds that must be reproducible without fetching fresh dependencies):
+
+#+begin_src shell
+go mod vendor
+#+end_src
+
+*** Key Characteristics
+
+Decentralized: Modules allow for decentralized dependency management without the need for a central repository.
+
+Versioning: Every module is versioned, allowing specific versions of dependencies to be used, ensuring compatibility and reproducibility.
+
+Replace Directive: Within the go.mod file, the replace directive can be used to force a specific version of a dependency or to use a local fork, which can be useful during development or to patch dependencies.
+
+Transition from GOPATH: With the introduction of modules, the GOPATH workspace model is no longer necessary, though it's still supported for backward compatibility.
+** Packages and Imports
+
+In Go, packages are a way to organize and reuse code. The primary use of packages is to provide separation of namespaces and encapsulate shared functionality.
+
+*** Basics
+
+Every Go file belongs to a package, defined with the package keyword at the top. The main package and main function are special and mark the entry point of an executable program.
+
+#+begin_src go
+package main
+
+import "fmt"
+
+func main() {
+fmt.Println("Hello, World!")
+}
+#+end_src
+
+*** Importing Packages
+
+You can import multiple packages by grouping them in parentheses:
+
+#+begin_src go
+package main
+
+import (
+"fmt"
+"math"
+)
+
+func main() {
+fmt.Println(math.Sqrt(16))
+}
+#+end_src
+
+#+RESULTS:
+: 4
+
+*** Alias Imports
+
+Sometimes, you may encounter package names that conflict or are too long. You can use an alias when importing a package:
+
+#+begin_src go
+package main
+
+import (
+f "fmt"
+)
+
+func main() {
+f.Println("Using an alias for fmt!")
+}
+#+end_src
+
+#+RESULTS:
+: Using an alias for fmt!
+
+*** Importing for Side Effects
+
+If you only want to run the init function of a package and not use its exported identifiers, you can use an underscore _:
+
+#+begin_src go
+import _ "image/png"
+#+end_src
+
+This is commonly used for drivers or to ensure specific initialization behaviors in packages.
+
+*** Exported Names
+
+In Go, names (functions, types, variables) that start with a capital letter are exported and can be accessed from other packages. If it starts with a lowercase letter, it's unexported and cannot be accessed outside its own package.
+
+*** Key Characteristics
+
+Decentralized Dependency Management: With Go modules, dependencies are decentralized, making it easier to manage project dependencies.
+No Cyclic Imports: Go does not allow cyclic imports, which simplifies the dependency graph.
+Initialization Order: Variables are initialized in the order they are declared. Also, each package has an init function that gets executed when the package is imported, even before the main function.
+
+** Maps
+
+Maps are one of the most frequently used and versatile data structures in Go. They associate keys of one type to values of another type.
+
+*** Basics
+
+Maps are created using the `make` function:
+
+#+begin_src go
+package main
+
+import "fmt"
+
+func main() {
+    m := make(map[string]int)
+    m["apple"] = 42
+    fmt.Println(m["apple"]) // Outputs: 42
+}
+#+end_src
+
+#+RESULTS:
+: 42
+
+*** Zero Values
+
+Accessing an element of a map by a key that doesn't exist returns the zero value for its type:
+
+#+begin_src go
+package main
+
+import "fmt"
+
+func main() {
+    m := make(map[string]int)
+    fmt.Println(m["banana"]) // Outputs: 0 (because "banana" hasn't been set and the zero value for int is 0)
+}
+#+end_src
+
+#+RESULTS:
+: 0
+
+*** Checking for Existence
+
+You can check if a key exists in the map with a two-value assignment:
+
+#+begin_src go
+package main
+
+import "fmt"
+
+func main() {
+    m := make(map[string]int)
+    m["apple"] = 42
+
+    value, exists := m["banana"]
+    if exists {
+        fmt.Println(value)
+    } else {
+        fmt.Println("Key does not exist.")
+    }
+}
+#+end_src
+
+#+RESULTS:
+: Key does not exist.
+
+*** Deleting from a Map
+
+Use the `delete` function to remove a key-value pair from a map:
+
+#+begin_src go
+package main
+
+import "fmt"
+
+func main() {
+    m := make(map[string]int)
+    m["apple"] = 42
+
+    delete(m, "apple")
+    fmt.Println(m) // Outputs: map[]
+}
+#+end_src
+
+*** Iterating Over a Map
+
+You can iterate over a map using a for loop with the `range` keyword:
+
+#+begin_src go
+package main
+
+import "fmt"
+
+func main() {
+    m := map[string]int{
+        "apple":  42,
+        "banana": 50,
+    }
+
+    for key, value := range m {
+        fmt.Printf("Key: %s, Value: %d\n", key, value)
+    }
+}
+#+end_src
+
+#+RESULTS:
+: Key: apple, Value: 42
+: Key: banana, Value: 50
+
+*** Key Characteristics
+
+- **Unordered:** Maps in Go don't maintain any order. When you iterate over them, key-value pairs are returned in random order.
+
+- **Reference Type:** Even though maps are a reference type, they don't support pointer arithmetic.
+
+- **Safe for Concurrent Reading:** However, if you're writing to a map from multiple goroutines, make sure to synchronize access using mutexes or other synchronization mechanisms.
+
+** Structs
+Structs in Go represent composite data types, grouping together zero
+or more values with potentially different types under a single type name.
+They are commonly used to define and create objects.
+*** Defining and initializing a struct
+
+#+begin_src go
+package main
+import "fmt"
+
+type Person struct {
+	Age int32
+	Name string
+}
+
+func main(){
+	bob := Person{Age:100, Name: "Bob"}
+
+	// It's possible to declare with just the proper position. This is
+	// called position struct initialization. Use when appropriate.
+	fiona := Person{30, "Fiona"}
+
+	fmt.Println(bob)
+	fmt.Println(fiona)
+}
+
+#+end_src
+
+*** Accessing struct fields
+#+begin_src go
+package main
+import "fmt"
+
+type Person struct {
+	Age int32
+	Name string
+}
+
+func main(){
+	bob := Person{Age:100, Name: "Bob"}
+
+	fmt.Println(bob.Age)
+	fmt.Println(bob.Name)
+}
+
+#+end_src
+*** Nested structs
+#+begin_src go
+package main
+import "fmt"
+
+type Address struct {
+	DoorNumber uint32
+	Street string
+}
+
+type Person struct {
+	Age int32
+	Name string
+	Address Address
+}
+
+func main(){
+	bob := Person{Age:100, Name: "Bob", Address: Address{DoorNumber: 1, Street: "Foo street"}}
+
+	fmt.Println(bob,"\n")
+	fmt.Println(bob.Age)
+	fmt.Println(bob.Name)
+	fmt.Println(bob.Address)
+}
+
+#+end_src
+
+#+RESULTS:
+: {100 Bob {1 Foo street}}
+:
+: 100
+: Bob
+: {1 Foo street}
+
+*** Anonymous structs
+#+begin_src go
+package main
+import "fmt"
+func main(){
+    person := struct{Name string}{Name: "Bob"}
+
+	fmt.Println(person)
+}
+
+#+end_src
+*** Promoted Fields
+If you embed a struct into another struct without giving it a field name, the embedded struct's fields get promoted to the outer struct. This means you can access them directly without the need to reference the embedded struct's name.
+
+#+begin_src go
+package main
+import "fmt"
+
+type Contact struct {
+    Phone, Email string
+}
+
+type Person struct {
+    Name string
+    Contact
+}
+
+func main(){
+	bob := Person{Name: "Bob", Contact: Contact{Phone: "123-456", Email: "bob@email.com"}}
+	fmt.Println(bob.Phone)  // Accessing promoted field directly
+	fmt.Println(bob.Contact)  // Accessing field Contact anyway
+}
+#+end_src
+
+** Error Handling
+Error handling in Go is explicit. Instead of using exceptions, Go uses return values to communicate errors. This approach makes it clear when a function can return an error and forces the caller to handle it, leading to more robust and understandable code.
+
+*** Basics
+So basic syntax in go is
+#+begin_src go
+if err != nil {
+	do something....
+}
+#+end_src
+
+#+RESULTS:
+
+Error handling in Go is idiomatic and tends to follow patterns. One common pattern is to immediately handle the error after the function that might produce it and then return or exit if there is an error. Here's a cleaner way to structure the error handling in your main function
+
+#+begin_src go
+package main
+import (
+    "fmt"
+    "errors"
+)
+
+func division(x, y int) (int, error) {
+	if y == 0{
+		return 0, errors.New("Division by 0 not possible")
+	}
+	return x / y, nil
+}
+
+func main(){
+	if div, err:= division(1,0); err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(div)
+	}
+
+	if div, err := division(1,1); err != nil {
+		fmt.Println("This will never show!")
+	} else {
+		fmt.Printf("Division 2: %d", div)
+	}
+}
+#+end_src
+
+*** Custom Errors
+You can define custom error types by implementing the `error` interface:
+In Go, an error is any value that implements the `error` interface, which requires a `Error() string` method.
+
+#+begin_src go
+package main
+import (
+    "fmt"
+)
+
+type CustomError struct {
+	op string
+	msg string
+}
+
+func (e CustomError) Error() string {
+	return fmt.Sprintf("Error -> %s || While doing Operation %s", e.msg, e.op)
+}
+
+func division(x,y int) (int, error) {
+	if y == 0 {
+		return 0, &CustomError{"division", "Can't divide by 0"}
+	}
+	return x / y, nil
+}
+
+func main(){
+	if div, err := division(1,0); err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("Will never reach this block", div)
+	}
+}
+
+#+end_src
+
+*** Key Characteristics
+
+- **Explicit Handling:** Instead of using try-catch blocks, Go encourages explicit error handling using return values.
+
+- **No Exceptions:** Go doesn't use exceptions, leading to simpler, more predictable code.
+
+- **Nil for No Error:** By convention, a nil error denotes success, and a non-nil error denotes failure.
+
+- **Custom Types:** As long as they implement the `error` interface, custom types can be used as errors, providing richer error information when needed.
+
+** Interfaces
+In Go, interfaces define a contract for behavior. An interface specifies a set of method signatures but doesn't implement them. Any type that provides implementations for all methods of an interface is said to "satisfy" that interface, implicitly, without having to declare so. This provides a way to achieve polymorphism, allowing different types to be treated as instances of the same interface type based on their behavior, rather than their structural hierarchy.
+
+*** Code Example
+#+begin_src go
+package main
+
+import "fmt"
+
+type Speaker interface{
+	Speak() string
+}
+
+type Dog struct {}
+type Cat struct {}
+
+func (d Dog) Speak() string {
+	return "Woooff"
+}
+
+func (c Cat) Speak() string {
+	return "Puuurrrr"
+}
+
+func  makeAnimalSound(s Speaker){
+	fmt.Println(s.Speak())
+}
+
+func main(){
+	var cat Speaker = &Cat{}
+	var dog Speaker = &Dog{}
+
+	makeAnimalSound(cat)
+	makeAnimalSound(dog)
+}
+#+end_src
+
+*** Understanding The Code Example
+- Defining the Interface: The =Speaker= interface is defined with a single method, =Speak() string=. Any type that has a method with this signature satisfies the =Speaker= interface.
+- Implementing the Interface: Both =Dog= and =Cat= types define the =Speak= method, thus they implicitly satisfy the =Speaker= interface.
+- Using the Interface: The function =makeAnimalSound= accepts a parameter of type =Speaker=. This means you can pass any value that satisfies the =Speaker= interface, be it a =Dog=, =Cat=, or any other type with a =Speak= method.
+- Polymorphism in Action: In the =main= function, both a =Dog= and =Cat= are passed to =makeAnimalSound=, showcasing polymorphism in Go.
+
+*** Key Characteristics
+- Implicit Implementation: In Go, there's no need to explicitly declare that a type implements an interface; if the methods match, it's automatic.
+- Duck Typing: If it looks like a duck and quacks like a duck, it's a duck. Similarly, in Go, if a type defines all the methods required by an interface, it's said to satisfy that interface.
+- Zero Methods: Interfaces with zero methods are known as empty interfaces (=interface{}=). Since any type can have zero methods, every type satisfies the empty interface. It's similar to =Object= in languages like Java or C#.
+- Interface Composition: Go doesn't have inheritance, but interfaces can be composed of other interfaces, providing a way to compose behaviors.
+- Values vs Pointers: Methods can be defined on values or pointers, and this distinction matters when determining if a type satisfies an interface.
+
+#+RESULTS:
+: Puuurrrr
+: Woooff
+
+** goroutines
+Goroutines are a core feature of Go's concurrent programming model. They are lightweight threads that are managed by the Go runtime, making concurrent programming in Go efficient and straightforward.
+
+*** Code Example
+#+begin_src go
+package main
+
+import (
+	"fmt"
+	"time"
+	"strconv"
+)
+
+func sendToChannel(ch chan string, chanName string) {
+	for i := 0; i < 5; i++ {
+		// sleep for demonstration, since concurrent they appear at same time instead of 500milli intervals
+		time.Sleep(time.Millisecond * 500)
+		ch <- "Sending from " + chanName + ": #" +  strconv.Itoa(i)
+	}
+	close(ch)
+}
+
+func readFromChannel(ch chan string, done chan bool) {
+	for msg := range ch {
+		fmt.Println(msg)
+	}
+
+	done <- true
+}
+
+func main() {
+	ch1 := make(chan string)
+	ch2 := make(chan string)
+
+	go sendToChannel(ch1, "Channel 1") // Start goroutine
+	go sendToChannel(ch2, "Channel 2") // Start goroutine
+
+
+	ch1Done := make(chan bool)
+	ch2Done := make(chan bool)
+
+	go readFromChannel(ch1, ch1Done)
+	go readFromChannel(ch2, ch2Done)
+
+	// finish when receive from both channels dones
+	<- ch1Done
+	<- ch2Done
+}
+#+end_src
+
+*** Understanding The Code Example
+
+This example highlights the communication and synchronization mechanisms in Go, specifically channels.
+
+1. **Initialization:** You initialize two string channels for message passing and two additional channels to signify when reading from the main channels is complete.
+
+2. **Sending Messages:** The =sendToChannel= function sends a series of messages to a provided channel and then closes it.
+
+3. **Reading Messages:** The =readFromChannel= function reads messages from a channel and prints them until the channel is closed. Once reading is complete, a signal is sent on the =done= channel.
+
+4. **Execution:** In the =main= function, you start two goroutines for sending messages and two for reading them. You then wait (synchronize) on the =done= channels to ensure both reading functions have completed before the main function exits.
+
+*** Key Characteristics
+- **Lightweight:** Goroutines consume less memory compared to traditional threads and can spin up thousands or even millions of them in a single program.
+
+- **Concurrent Execution:** When using the =go= keyword, it spawns a goroutine that runs concurrently with the function it's called from. This doesn't mean it's parallel (though it can be on multi-core systems); it means the Go runtime manages its execution in tandem with other goroutines and the main thread.
+
+- **Non-blocking:** The main function will not wait for goroutines to finish. If the main function completes, any running goroutines are stopped. This is why synchronization mechanisms like channels are crucial.
+
+** defer in Go
+The `defer` statement in Go allows you to schedule the execution of functions to be run after the surrounding function completes. It's commonly used to simplify functions that perform various clean-up actions, such as resource deallocation.
+
+*** Code Example (basic)
+#+begin_src go
+package main
+
+import "fmt"
+
+func main() {
+    defer fmt.Println("World!")
+    fmt.Println("Hello,")
+}
+#+end_src
+
+#+RESULTS:
+: Hello,
+: World!
+
+*** Code Example (stack)
+#+begin_src go
+package main
+
+import "fmt"
+
+func main() {
+	defer fmt.Println("Calling defer #1")
+	defer fmt.Println("Calling defer #2")
+	defer fmt.Println("Calling defer #3")
+	defer fmt.Println("Calling defer #4")
+	fmt.Println("These should be called like a stack, first in last out")
+}
+
+#+end_src
+
+#+RESULTS:
+: These should be called like a stack, filo style
+: Calling defer #4
+: Calling defer #3
+: Calling defer #2
+: Calling defer #1
+
+*** Understanding The Code Example
+
+In the above example, the function `Println("World!")` is deferred, which means it will only be executed after the surrounding function (`main` in this case) finishes its execution.
+
+1. **Execution Order:** Even though the deferred function is defined before the non-deferred one, it's executed after. Thus, the output will be:
+
+** TODO Testing
+** TODO Concurrency Patterns
+** TODO Embedding

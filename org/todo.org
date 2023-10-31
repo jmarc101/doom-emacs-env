@@ -1,0 +1,31 @@
+* Inbox
+** [ ]
+
+[[file:~/repo/grpc-go/main.go::basic.BasisUser()]]
+#+begin_src js
+function hello(name){
+   return `hello, ${name}`
+}
+return hello("bob")
+#+end_src
+
+#+RESULTS:
+: hello
+
+
+#+begin_src go
+package main
+
+import "fmt"
+
+func foo(name string) string {
+	return "Hello, " + name
+}
+
+func main() {
+	fmt.Println(foo("bob"))
+}
+#+end_src
+
+#+RESULTS:
+: Hello, bob

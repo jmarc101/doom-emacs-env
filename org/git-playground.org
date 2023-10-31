@@ -1,0 +1,35 @@
+* Git
+** Ignoring --local-- Changes in the Git Index with --skip-worktree
+Sometimes, you may want to keep certain changes in your project files locally but ensure that Git never tracks or commits them. Git provides the `--skip-worktree` option for this purpose. Here's how you can use it:
+
+*** Marking Files as "Skip-Worktree"
+
+To mark a file as "skip-worktree," follow these steps:
+
+1. Ensure that the file is in the state you want to keep locally. This could be configurations, settings, or any changes specific to your local environment.
+
+2. Run the following Git command with the `--skip-worktree` option, specifying the filename you want to mark:
+
+#+BEGIN_SRC shell
+git update-index --skip-worktree <filename>
+#+END_SRC
+
+   Replace `<filename>` with the name of the file you want to mark. This command tells Git to ignore any changes to this file.
+
+*** Verifying Skip-Worktree Status
+
+You can verify the skip-worktree status of a file by running:
+
+#+BEGIN_SRC shell
+git ls-files -v
+#+END_SRC
+
+- If the file is marked as "skip-worktree," you'll see it listed with `S` status in the output.
+
+*** Maintaining Local Changes
+
+Now, Git will keep the changes in your local file but won't commit them. These changes will always be ignored no matter which branch you're on. This is useful for maintaining local configurations and settings without affecting Git's version control.
+
+Using `--skip-worktree` is a helpful way to manage files that contain your personal configurations or local adjustments that are not intended for sharing with other collaborators. It ensures that your local changes remain intact and never accidentally become part of a Git commit.
+
+Keep in mind that this feature should be used carefully, and you should document such files or configurations to prevent confusion for other contributors.

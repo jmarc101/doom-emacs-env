@@ -1,0 +1,79 @@
+* Javascript Playground
+
+** Classes
+#+begin_src js
+class Person {
+    constructor(name, age){
+        this.name = name;
+        this.age = age;
+    }
+
+    greet() {
+        return `Hello, I'm ${this.name}!`
+    }
+}
+
+let bob = new Person("Bob", 37)
+
+console.log(bob.greet())
+#+end_src
+
+** Static Methods
+#+begin_src js
+class Foo {
+    constructor(){}
+
+    static staticMethod(){
+        return "I'm a static method, simple as that"
+    }
+}
+
+console.log(Foo.staticMethod())
+#+end_src
+
+#+RESULTS:
+: I'm a static method, simple as that
+: undefined
+
+** Date.toString formats (some)
+
+#+begin_src js
+let date = new Date();
+
+// Full date string
+console.log("Full date string:", date.toString());
+
+// ISO date string
+console.log("ISO date string:", date.toISOString());
+
+// UTC date string
+console.log("UTC date string:", date.toUTCString());
+
+// Locale string
+console.log("Locale string:", date.toLocaleString());
+
+// Locale date string
+console.log("Locale date string:", date.toLocaleDateString());
+
+// Locale time string
+console.log("Locale time string:", date.toLocaleTimeString());
+
+// Custom format: long weekday, day, month, and year
+let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+console.log("Custom date format:", date.toLocaleDateString('en-US', options));
+
+// Custom time format: hours, minutes, seconds
+options = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+console.log("Custom time format:", date.toLocaleTimeString('en-US', options));
+#+end_src
+
+#+RESULTS:
+: Full date string: Sun Oct 29 2023 16:11:19 GMT-0400 (Eastern Daylight Saving Time)
+: ISO date string: 2023-10-29T20:11:19.316Z
+: UTC date string: Sun, 29 Oct 2023 20:11:19 GMT
+: Locale string: 2023-10-29, 4:11:19 p.m.
+: Locale date string: 2023-10-29
+: Locale time string: 4:11:19 p.m.
+: Custom date format: Sunday, October 29, 2023
+: Custom time format: 04:11:19 PM
+: undefined
