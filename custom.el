@@ -11,7 +11,7 @@
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(org-pretty-tags org-journal org-roam flymake-eslint eslintd-fix react-snippets))
+   '(org-pretty-tags org-journal org-roam eslintd-fix react-snippets))
  '(size-indication-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
