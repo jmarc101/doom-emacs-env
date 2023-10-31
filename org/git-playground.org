@@ -33,3 +33,29 @@ Now, Git will keep the changes in your local file but won't commit them. These c
 Using `--skip-worktree` is a helpful way to manage files that contain your personal configurations or local adjustments that are not intended for sharing with other collaborators. It ensures that your local changes remain intact and never accidentally become part of a Git commit.
 
 Keep in mind that this feature should be used carefully, and you should document such files or configurations to prevent confusion for other contributors.
+** Setting a Remote Repository in Git
+
+You can set a remote repository in Git using the `git remote add` command. This allows you to connect your local repository to a remote one, making it easier to push and pull changes.
+
+Here's the command to set a remote repository:
+
+#+BEGIN_SRC sh
+git remote add <remote-name> <repository-URL>
+#+END_SRC
+
+- `<remote-name>`: Choose a name for the remote repository (e.g., "origin").
+- `<repository-URL>`: Provide the URL of the remote Git repository.
+
+For example, to add a remote named "origin" with a GitHub repository URL, you would run:
+
+#+BEGIN_SRC sh
+git remote add origin https://github.com/username/repo.git
+#+END_SRC
+
+Once you've added a remote repository, you can use the remote name (e.g., "origin") to interact with the remote, like pushing changes or fetching updates.
+
+To see a list of remotes associated with your repository, you can use:
+
+#+BEGIN_SRC sh
+git remote -v
+#+END_SRC
