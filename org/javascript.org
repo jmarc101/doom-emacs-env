@@ -1,4 +1,4 @@
-* Javascript Playground
+* Javascript
 
 ** Classes
 #+begin_src js

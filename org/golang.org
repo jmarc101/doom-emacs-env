@@ -1,4 +1,4 @@
-* Golang Playground
+* Golang
 ** Modules
 
 Go modules are the standard way of managing dependencies in Go. Introduced in Go 1.11, they replace older methods like GOPATH and dep, allowing for versioned module paths and decentralized dependency resolution.
