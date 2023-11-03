@@ -1,0 +1,12 @@
+* Org-Mode
+** Task list shortcuts
+- You can use spc m t t to mark something as todo
+- spc m d s opens org schedule to add date to it
+- you can move date around with S-arrows
+- Normal-Mode RET with toggle todo/done
+** Checkboxes [/]
+- [ ] This is considered a checkbox
+- [ ] CTRL+RET will make another list item with checkbox
+- [ ] To check the box, CTRL-C CTRL-C or SPC m x
+- [X] Wow, it's grayed out!
+- [ ] If you put [/] in header it will count the checked ones
