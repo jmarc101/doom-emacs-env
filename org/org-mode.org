@@ -4,9 +4,14 @@
 - spc m d s opens org schedule to add date to it
 - you can move date around with S-arrows
 - Normal-Mode RET with toggle todo/done
-** Checkboxes [/]
+** Checkboxes [2/7]
 - [ ] This is considered a checkbox
 - [ ] CTRL+RET will make another list item with checkbox
 - [ ] To check the box, CTRL-C CTRL-C or SPC m x
 - [X] Wow, it's grayed out!
-- [ ] If you put [/] in header it will count the checked ones
+- [ ] If you put [0/0] in header it will count the checked ones
+- [-] You can have nested lists
+  - [ ] Task one
+  - [X] Task two
+- [X] It will only mark X if all sub tasks completed
+  - [X] Complete me!

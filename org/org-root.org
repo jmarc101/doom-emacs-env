@@ -7,4 +7,4 @@
 [[file:protocol-buffer.org][Protocol Buffer]]
 [[file:grpc.org][gRPC]]
 * Emacs
-[[file:org-mode::Org-Mode][Org-mode]]
+[[file:org-mode.org::*Org-Mode][Org-Mode]]

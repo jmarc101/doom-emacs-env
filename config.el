@@ -1,19 +1,34 @@
+;; General
+(setq user-full-name "Jean-Marc Prud'homme"
+      user-mail-address "jm.prudhomme@icloud.com"
+      doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 16)
+      doom-theme 'doom-one
+      display-line-numbers-type `relative
+      load-prefer-newer t
+      org-directory "~/.doom.d/org/"
+      org-ellipsis " ▼ "
+      org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "✿")
+      org-agenda-start-day "+0d"
+      org-agenda-span 1
+      org-agenda-files '("~/.doom.d/org/tasks.org"
+                         "~/.doom.d/org/agenda.org"))
+
+(after! org
+  (setq org-agenda-start-day "+0d"))
+
+;; This set emacs window size and opsition on startup
+(setq initial-frame-alist
+      '((width . 160)
+        (height . 100)
+        (top . 20)
+        (left . 50)))
+
 ;; eslint
 (setq flycheck-javascript-eslint-executable "eslint_d")
 
 (add-hook 'typescript-tsx-mode-hook 'eslintd-fix-mode)
 (add-hook 'typescript-mode-hook 'eslintd-fix-mode)
 (add-hook 'web-mode-hook 'eslintd-fix-mode)
-
-;; Set the default font and theme
-(setq doom-theme 'doom-zenburn)
-(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 14))
-
-;; Make code lines relative insteal of absolute
-(setq display-line-numbers-type 'relative)
-
-;; Org default directory override
-(setq org-directory "~/.doom.d/org/")
 
 ;;Setup deft
 (setq deft-extensions '("txt" "tex" "org"))
@@ -23,12 +38,6 @@
 (after! projectile
   (setq projectile-project-search-path '("~/repo/")))
 
-;; This set emacs window size and opsition on startup
-(setq initial-frame-alist
-      '((width . 180)
-        (height . 100)
-        (top . 20)
-        (left . 50)))
 
 ;; Web mode for react files
 (use-package web-mode  :ensure t
@@ -44,3 +53,61 @@
   (setq web-mode-content-types-alist
 	'(("jsx" . "\\.js[x]?\\'")))
   )
+
+(org-super-agenda-mode)
+
+(setq org-todo-keywords
+      '((sequence "TODO" "DOING" "SOMEDAY" "|" "DONE" "CANCELED")))
+
+(setq org-todo-keyword-faces
+      '(("TODO" . (:foreground "#FB8500" :weight bold))
+        ("DOING" . (:foreground "#FFB703" :weight bold))
+        ("SOMEDAY" . (:foreground "#219EBC" :weight bold))
+        ("DONE" . (:foreground "#70E000" :weight bold))
+        ("CANCELED" . (:foreground "#da2c38" :weight bold))))
+
+
+(setq org-agenda-custom-commands
+      '(("a" "Jm's Agenda"
+         ((agenda "" ((org-agenda-span 'day)
+                      (org-super-agenda-groups
+                       '((:name "Schedule"
+                          :time-grid t
+                          :date today
+                          :scheduled today
+                          :deadline today
+                          :order 1)
+                         (:name "📅 Appointments soon 📅"
+                          :tag "Appointment"
+                          :order 2)))))
+          (alltodo "" ((org-agenda-overriding-header "")
+                       (org-super-agenda-groups
+                        '((:name "🔥 Today's Tasks 🔥"
+                           :tag "Today"
+                           :order 4)
+                          (:name "🚨 Important 🚨"
+                           :tag "Important"
+                           :priority "A"
+                           :order 8)
+                          (:name "🚓 Due Soon 🚓"
+                           :and (:deadline future :not(:tag "Appointment"))
+                           :order 16)
+                          (:name "🚀 Projects 🚀"
+                           :tag "Project"
+                           :order 20)
+                          (:name "💻 Emacs 💻"
+                           :tag "Emacs"
+                           :order 24)
+                          (:name "📓 To read 📓"
+                           :tag "Read"
+                           :order 28)
+                          (:name "❄️ trivial ❄️"
+                           :priority<= "C"
+                           :todo "SOMEDAY"
+                           :tag ("Trivial" "Unimportant")
+                           :order 90)
+                          (:discard
+                           (:tag "Appointment"))
+                          ))))))))
+(after! org
+  (setq org-deadline-warning-days 30))

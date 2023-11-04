@@ -284,6 +284,10 @@ func main(){
 
 #+end_src
 
+#+RESULTS:
+: {100 Bob}
+: {30 Fiona}
+
 *** Accessing struct fields
 #+begin_src go
 package main
