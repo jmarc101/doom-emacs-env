@@ -16,6 +16,8 @@
 (after! org
   (setq org-agenda-start-day "+0d"))
 
+(setq org-archive-location (concat org-directory "archive/%s_archive::"))
+
 ;; This set emacs window size and opsition on startup
 (setq initial-frame-alist
       '((width . 160)
@@ -57,21 +59,22 @@
 (org-super-agenda-mode)
 
 (setq org-todo-keywords
-      '((sequence "TODO" "DOING" "SOMEDAY" "|" "DONE" "CANCELED")))
+      '((sequence "TODO(t)" "IN PROGRESS(i)" "SOMEDAY(s)" "|" "DONE(d)" "BLOCKED(b)" "CANCELLED(c)")))
 
 (setq org-todo-keyword-faces
       '(("TODO" . (:foreground "#FB8500" :weight bold))
         ("DOING" . (:foreground "#FFB703" :weight bold))
         ("SOMEDAY" . (:foreground "#219EBC" :weight bold))
         ("DONE" . (:foreground "#70E000" :weight bold))
-        ("CANCELED" . (:foreground "#da2c38" :weight bold))))
+        ("BLOCKED" . (:foreground "#da2c38" :weight bold))
+        ("CANCELLED" . (:foreground "#da2c38" :weight bold))))
 
 
 (setq org-agenda-custom-commands
       '(("a" "Jm's Agenda"
          ((agenda "" ((org-agenda-span 'day)
                       (org-super-agenda-groups
-                       '((:name "Schedule"
+                       '((:name "⏰ Schedule Today ⏰"
                           :time-grid t
                           :date today
                           :scheduled today
@@ -89,6 +92,9 @@
                            :tag "Important"
                            :priority "A"
                            :order 8)
+                          (:name "🚓 Past Due 🚓"
+                           :deadline past
+                           :order 9)
                           (:name "🚓 Due Soon 🚓"
                            :and (:deadline future :not(:tag "Appointment"))
                            :order 16)
@@ -101,6 +107,9 @@
                           (:name "📓 To read 📓"
                            :tag "Read"
                            :order 28)
+                          (:name "🛍️ Shopping List 🛍️"
+                           :tag "Shop"
+                           :order 32)
                           (:name "❄️ trivial ❄️"
                            :priority<= "C"
                            :todo "SOMEDAY"

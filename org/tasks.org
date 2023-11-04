@@ -1,0 +1,9 @@
+* [#A] Important
+* Projects :Project:
+** IN PROGRESS gRCP
++ [ ] protocol buffer
++ [ ] gRPC go
++ [ ] gRPC API
+* Emacs :Emacs:
+** IN PROGRESS Finished Setting up Agenda
+*  Someday :Trivial:
