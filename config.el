@@ -11,7 +11,9 @@
       org-agenda-start-day "+0d"
       org-agenda-span 1
       org-agenda-files '("~/.doom.d/org/tasks.org"
-                         "~/.doom.d/org/agenda.org"))
+                         "~/.doom.d/org/agenda.org"
+                         "~/.doom.d/org/calendars/gcal-work.org"
+                         "~/.doom.d/org/calendars/gcal-pers.org"))
 
 (after! org
   (setq org-agenda-start-day "+0d"))
@@ -120,3 +122,26 @@
                           ))))))))
 (after! org
   (setq org-deadline-warning-days 30))
+
+(setq mark-diary-entries-in-calendar t)
+
+
+;; This function runs script to fetch google calendar
+;; Also adds a cron job to refetch every 15 mins
+(defun add-cron-job-and-run-once ()
+  "Add a cron job to run your script every 15 minutes and run it once."
+  (interactive)
+  (let ((script-path "~/.doom.d/scripts/fetch-gcals.sh")) ; Modify the path to your script
+    ;; Run the script once
+    (shell-command (concat "chmod +x " script-path))
+    (shell-command (concat "/bin/bash " script-path))
+
+    ;; Add the cron job
+    (let ((cron-line (format "*/15 * * * * /bin/bash %s" script-path)))
+      (with-temp-buffer
+        (insert (concat cron-line "\n"))
+        (call-process-region (point-min) (point-max) "crontab" nil t)))
+    (message "Cron job added and script run once."))
+  )
+
+(add-hook 'emacs-startup-hook 'add-cron-job-and-run-once)

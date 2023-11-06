@@ -1,6 +1,4 @@
 * Today's Tasks :Today:
-** TODO Gym
-SCHEDULED: <2023-11-04 Sat 12:00>
 * Appointments :Appointment:
 ** TODO Doctor's block m
 DEADLINE: <2023-11-08 Wed 11:00>
