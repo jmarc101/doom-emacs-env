@@ -39,9 +39,7 @@
 (setq deft-directory "~/.doom.d/org/")
 (setq deft-recursive t)
 
-(after! projectile
-  (setq projectile-project-search-path '("~/repo/")))
-
+(setq projectile-project-search-path '((\"~/repo\". 2) (\"~/.doom.d\". 1)))
 
 ;; Web mode for react files
 (use-package web-mode  :ensure t
