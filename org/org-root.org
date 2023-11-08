@@ -1,10 +1,10 @@
 #+title: Org Root
 * Languages
-[[file:golang.org][GoLang]]
-[[file:javascript.org][JavaScript]]
+[[file:code/golang.org][GoLang]]
+[[file:code/javascript.org][JavaScript]]
 * Concepts
-[[file:git.org][Git]]
-[[file:protocol-buffer.org][Protocol Buffer]]
-[[file:grpc.org][gRPC]]
+[[file:code/git.org][Git]]
+[[file:code/protocol-buffer.org][Protocol Buffer]]
+[[file:code/grpc.org][gRPC]]
 * Emacs
-[[file:org-mode.org::*Org-Mode][Org-Mode]]
+[[file:code/org-mode.org::*Org-Mode][Org-Mode]]

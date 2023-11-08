@@ -4,6 +4,9 @@
 - spc m d s opens org schedule to add date to it
 - you can move date around with S-arrows
 - Normal-Mode RET with toggle todo/done
+** Making links between section or files
+- SPC m l s (Save current position as link)
+- SPC m l l (create link)
 ** Checkboxes [2/7]
 - [ ] This is considered a checkbox
 - [ ] CTRL+RET will make another list item with checkbox

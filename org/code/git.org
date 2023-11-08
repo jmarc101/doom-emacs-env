@@ -59,3 +59,18 @@ To see a list of remotes associated with your repository, you can use:
 #+BEGIN_SRC sh
 git remote -v
 #+END_SRC
+** Ignore file tracking that are already in git but you dont want anymore
+To do this, add the files you want to remove from git in your .gitignore
+
+#+begin_src .gitignore
+file.txt
+#+end_src
+
+then remove from cached git
+
+#+begin_src shell
+git rm --cached file.txt
+
+#+end_src
+
+Commit you changes

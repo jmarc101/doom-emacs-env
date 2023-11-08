@@ -1,0 +1,18 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file /Users/jm.prudhomme/.doom.d/org/tasks.org
+
+
+* DONE Finished Setting up Agenda [3/3]
+:PROPERTIES:
+:ARCHIVE_TIME: 2023-11-05 Sun 21:31
+:ARCHIVE_FILE: ~/.doom.d/org/tasks.org
+:ARCHIVE_OLPATH: Emacs
+:ARCHIVE_CATEGORY: tasks
+:ARCHIVE_TODO: DONE
+:ARCHIVE_ITAGS: Emacs
+:END:
++ [X] Setup importing google calendar to org-agenda
++ [X] Setup second ical2org awk script, 1 for work 1 for personnal.
++ [X] setup cron job to use import script to fetch work and personnal agenda
