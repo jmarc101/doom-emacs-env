@@ -1,7 +1,0 @@
-* Today's Tasks :Today:
-* Appointments :Appointment:
-** TODO Doctor's block m
-DEADLINE: <2023-11-08 Wed 11:00>
-** TODO Mazda garage A.M.
-DEADLINE: <2023-11-14 Tue 11:00>
-* Shopping :Shop:

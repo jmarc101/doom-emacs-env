@@ -10,10 +10,10 @@
       org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "✿")
       org-agenda-start-day "+0d"
       org-agenda-span 1
-      org-agenda-files '("~/.doom.d/org/tasks.org"
-                         "~/.doom.d/org/agenda.org"
-                         "~/.doom.d/org/calendars/gcal-work.org"
-                         "~/.doom.d/org/calendars/gcal-pers.org"))
+      org-agenda-files '("~/google-drive/emacs/tasks.org"
+                         "~/google-drive/emacs/agenda.org"
+                         "~/google-drive/emacs/calendars/gcal-work.org"
+                         "~/google-drive/emacs/calendars/gcal-pers.org"))
 
 (after! org
   (setq org-agenda-start-day "+0d"))
