@@ -120,7 +120,7 @@ This option is particularly useful when you have multiple Protobuf files and wan
 
 Optional fields may or may not be present in a message. They are often used for values that might not always be available.
 
-#+begin_src
+#+begin_src protobuf
 message Person {
     string name = 1;
     int32 age = 2;
