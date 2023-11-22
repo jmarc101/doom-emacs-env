@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(package-selected-packages
-   '(go-snippets protobuf-mode calfw-ical calfw org-ql org-super-agenda yasnippet org-pretty-tags eslintd-fix)))
+   '(tide eslintd-fix eslint-rc editorconfig go-snippets protobuf-mode calfw-ical calfw org-ql org-super-agenda yasnippet org-pretty-tags)))
  
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

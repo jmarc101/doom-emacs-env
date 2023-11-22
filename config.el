@@ -27,12 +27,37 @@
         (top . 20)
         (left . 50)))
 
-;; eslint
-(setq flycheck-javascript-eslint-executable "eslint_d")
+;; ;; accept completion from copilot and fallback to company
+;; (use-package! copilot
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;               ("<tab>" . 'copilot-accept-completion)
+;;               ("TAB" . 'copilot-accept-completion)
+;;               ("C-TAB" . 'copilot-accept-completion-by-word)
+;;               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
+;; ;; eslint
+(setq flycheck-javascript-eslint-executable "eslint_d")
+(setq eslintd-fix-executable "/usr/local/bin/eslint_d")
 (add-hook 'typescript-tsx-mode-hook 'eslintd-fix-mode)
 (add-hook 'typescript-mode-hook 'eslintd-fix-mode)
 (add-hook 'web-mode-hook 'eslintd-fix-mode)
+
+;; (setq tide-completion-enable-autoimport-suggestions t
+;;       tide-save-buffer-after-code-edit nil
+;;       tide-completion-show-source t
+;;       tide-hl-identifier-mode t
+;;       tide-hl-identifier-idle-time 1.5
+;;       tide-recenter-after-jump t)
+;; (map! :leader :desc "Code fix at position" "c f" #'tide-fix)
+
+
+;; Add more lines to descrinbe error in lsp-flycheck
+(after! lsp-ui
+  (setq lsp-ui-sideline-diagnostic-max-lines 2))
+
+(after! lsp-mode
+  (add-hook 'prog-mode-hook #'lsp))
 
 ;;Setup deft
 (setq deft-extensions '("txt" "tex" "org"))
@@ -143,3 +168,11 @@
   )
 
 (add-hook 'emacs-startup-hook 'add-cron-job-and-run-once)
+
+;; setting protobuf file import at root of project
+(defun set-protobuf-import-root ()
+  (when (and buffer-file-name (string-match "\\.proto$" buffer-file-name))
+    (let ((project-root (projectile-project-root)))
+      (when project-root
+        (setq-local protobuf-import-root (concat project-root "proto/"))))))
+(add-hook 'find-file-hook 'set-protobuf-import-root)

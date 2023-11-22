@@ -62,3 +62,34 @@ SCHEDULED: <2023-11-04 Sat 12:00>
 :ARCHIVE_ITAGS: Shop
 :END:
 Decided to go with the keeb.io Iris
+
+* TODO Doctor's block m
+DEADLINE: <2023-11-10 Wed 11:00>
+:PROPERTIES:
+:ARCHIVE_TIME: 2023-11-10 Fri 14:28
+:ARCHIVE_FILE: ~/google-drive/emacs/agenda.org
+:ARCHIVE_OLPATH: Appointments
+:ARCHIVE_CATEGORY: agenda
+:ARCHIVE_TODO: TODO
+:ARCHIVE_ITAGS: Appointment
+:END:
+
+* Mazda garage A.M.
+DEADLINE: <2023-11-14 Tue 11:00>
+:PROPERTIES:
+:ARCHIVE_TIME: 2023-11-16 Thu 20:31
+:ARCHIVE_FILE: ~/google-drive/emacs/agenda.org
+:ARCHIVE_OLPATH: Appointments
+:ARCHIVE_CATEGORY: agenda
+:ARCHIVE_ITAGS: Appointment
+:END:
+
+* IRM 19h30 Valleyfield - Radiologie
+DEADLINE: <2023-11-17 Fri 19:30>
+:PROPERTIES:
+:ARCHIVE_TIME: 2023-11-22 Wed 09:12
+:ARCHIVE_FILE: ~/google-drive/emacs/agenda.org
+:ARCHIVE_OLPATH: Appointments
+:ARCHIVE_CATEGORY: agenda
+:ARCHIVE_ITAGS: Appointment
+:END:
